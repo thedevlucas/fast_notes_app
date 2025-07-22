@@ -52,6 +52,3 @@ This app was developed as a productivity tool and also as a showcase for solid a
 <p align="right">(<a href="#readme-top">Go up</a>)</p>
 
 ---
-
-## 📁 Folder Structure
-
