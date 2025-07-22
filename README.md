@@ -5,13 +5,12 @@
 ![GitHub followers](https://img.shields.io/github/followers/thedevlucas?style=for-the-badge)
 ![GitHub Stars](https://img.shields.io/github/stars/thedevlucas/fast_notes_app?style=for-the-badge)
 ![GitHub Forks](https://img.shields.io/github/forks/thedevlucas/fast_notes_app?style=for-the-badge)
-![GitHub License](https://img.shields.io/github/license/thedevlucas/fast_notes_app?style=for-the-badge)
 
 <br>
 
 <img src="https://raw.githubusercontent.com/thedevlucas/fast_notes_app/refs/heads/master/image.png" alt="Fast Notes Preview" width="800"/>
 
-## ✨ Fast Notes App
+## Fast Notes App
 A modern and lightweight desktop note-taking app with secure user login and persistent storage via MySQL.
 
 This app was developed as a productivity tool and also as a showcase for solid authentication, encrypted password handling, and clean WinForms UI.
