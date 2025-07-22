@@ -23,7 +23,6 @@ This app was developed as a productivity tool and also as a showcase for solid a
 ## 🛠️ Tech Stack
 
 - ![C#](https://img.shields.io/badge/C%23-512BD4?style=for-the-badge&logo=csharp&logoColor=white) - Core language
-- ![WinForms](https://img.shields.io/badge/WinForms-0078D7?style=for-the-badge&logo=windows&logoColor=white) - UI framework
 - ![MySQL](https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white) - Database engine
 - ![PBKDF2](https://img.shields.io/badge/PBKDF2-Secure%20Hashing-1abc9c?style=for-the-badge) - Password hashing
 - ![.NET 8](https://img.shields.io/badge/.NET-8.0-blueviolet?style=for-the-badge&logo=dotnet&logoColor=white) - Runtime
