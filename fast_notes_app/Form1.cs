@@ -14,17 +14,22 @@ namespace fast_notes_app
             InitializeComponent();
             dbHelper = new DatabaseHelper();
 
-            CheckSavedCredentialsAsync();
+
             this.Shown += async (s, e) =>
             {
-                this.Opacity = 0; // Oculta visualmente el formulario
+                this.Opacity = 0; // Hide the form visually
 
                 await InitializeDatabaseAsync();
-                await Task.Delay(300); // Pequeño delay opcional para "suavizar"
+                await Task.Delay(300); // Small delay for smoothness
 
-                CheckSavedCredentialsAsync();
+                // Only call this once - after database initialization
+                await CheckSavedCredentialsAsync();
 
-                this.Opacity = 1; // Mostrar si no hubo auto-login
+                // Only show if auto-login didn't succeed
+                if (this.Visible)
+                {
+                    this.Opacity = 1;
+                }
             };
 
             SetPlaceholderStyle(textBox1, true);
@@ -83,7 +88,7 @@ namespace fast_notes_app
             };
         }
 
-        private async void CheckSavedCredentialsAsync()
+        private async Task CheckSavedCredentialsAsync()
         {
             try
             {
@@ -93,17 +98,15 @@ namespace fast_notes_app
 
                     if (success && !string.IsNullOrEmpty(username) && userId > 0)
                     {
-                        //button1.Text = "Auto-signing in...";
-                        //button1.Enabled = false;
-
                         var (loginSuccess, message, user) = await dbHelper.ValidateUserByIdAsync(userId, username);
 
                         if (loginSuccess && user != null)
                         {
-                            // Auto-login successful
-                            var mainForm = new MainForm(user);
-                            mainForm.Show();
+                            // Auto-login successful - hide this form and show main form
                             this.Hide();
+                            var mainForm = new MainForm(user);
+                            mainForm.FormClosed += (s, e) => this.Close(); // Close login form when main form closes
+                            mainForm.Show();
                             return;
                         }
                         else
@@ -115,14 +118,12 @@ namespace fast_notes_app
                         button1.Enabled = true;
                     }
                 }
-                this.Opacity = 1;
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"Auto-login error: {ex.Message}");
                 button1.Text = "Sign In";
                 button1.Enabled = true;
-                this.Opacity = 1;
             }
         }
 
@@ -187,9 +188,10 @@ namespace fast_notes_app
                         Console.WriteLine("Warning: Could not save login credentials for auto-login");
                     }
 
-                    //login passes
+                    // Hide login form and show main form
                     this.Hide();
                     var mainForm = new MainForm(user);
+                    mainForm.FormClosed += (s, e) => this.Close(); // Close login form when main form closes
                     mainForm.Show();
                 }
                 else

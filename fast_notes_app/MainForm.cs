@@ -219,12 +219,12 @@ namespace fast_notes_app
             {
                 CredentialManager.DeleteSavedCredentials();
 
-                Task.Run(() =>
-                {
-                    Application.Run(new Form1());
-                });
+                // Create and show login form
+                var loginForm = new Form1();
+                loginForm.Show();
 
-                this.Invoke(() => this.Close());
+                // Close current form
+                this.Close();
             }
         }
 
