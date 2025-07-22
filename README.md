@@ -2,10 +2,10 @@
 
 <div align="center">
 
-![GitHub followers](https://img.shields.io/github/followers/TheDevLucas?style=for-the-badge)
-![GitHub Stars](https://img.shields.io/github/stars/TheDevLucas/fast-notes-app?style=for-the-badge)
-![GitHub Forks](https://img.shields.io/github/forks/TheDevLucas/fast-notes-app?style=for-the-badge)
-![GitHub License](https://img.shields.io/github/license/TheDevLucas/fast-notes-app?style=for-the-badge)
+![GitHub followers](https://img.shields.io/github/followers/thedevlucas?style=for-the-badge)
+![GitHub Stars](https://img.shields.io/github/stars/thedevlucas/fast_notes_app?style=for-the-badge)
+![GitHub Forks](https://img.shields.io/github/forks/thedevlucas/fast_notes_app?style=for-the-badge)
+![GitHub License](https://img.shields.io/github/license/thedevlucas/fast_notes_app?style=for-the-badge)
 
 <br>
 
@@ -48,10 +48,7 @@ This app was developed as a productivity tool and also as a showcase for solid a
 ## 📷 Preview
 
 > _Login & Session_
-![Login](https://github.com/TheDevLucas/fast-notes-app/blob/main/screenshots/login.png?raw=true)
-
-> _Main interface_
-![Main](https://github.com/TheDevLucas/fast-notes-app/blob/main/screenshots/notes.png?raw=true)
+![Login](https://raw.githubusercontent.com/thedevlucas/fast_notes_app/refs/heads/master/login.png)
 
 <p align="right">(<a href="#readme-top">Go up</a>)</p>
 
