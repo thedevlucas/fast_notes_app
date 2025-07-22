@@ -217,11 +217,17 @@ namespace fast_notes_app
 
             if (result == DialogResult.Yes)
             {
-                this.Hide();
-                var loginForm = new Form1();
-                loginForm.Show();
+                CredentialManager.DeleteSavedCredentials();
+
+                Task.Run(() =>
+                {
+                    Application.Run(new Form1());
+                });
+
+                this.Invoke(() => this.Close());
             }
         }
+
 
         private void NotesListBox_DrawItem(object sender, DrawItemEventArgs e)
         {

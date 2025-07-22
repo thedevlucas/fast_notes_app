@@ -42,7 +42,7 @@ namespace fast_notes_app
             return Convert.ToBase64String(hashBytes);
         }
 
-      
+
         public (string hash, string salt) HashPassword(string password)
         {
             byte[] saltBytes = new byte[32];
@@ -84,7 +84,7 @@ namespace fast_notes_app
 
             bool isValid = VerifyPassword(password, hash, salt);
             Console.WriteLine($"Verificación correcta? {isValid}");
-           
+
             bool isInvalid = VerifyPassword("otra_contraseña", hash, salt);
             Console.WriteLine($"Verificación con contraseña incorrecta: {isInvalid}");
         }
@@ -177,6 +177,48 @@ namespace fast_notes_app
             catch (Exception ex)
             {
                 return (false, $"Login failed: {ex.Message}", null);
+            }
+        }
+
+        public async Task<(bool success, string message, UserInfo? user)> ValidateUserByIdAsync(int userId, string username)
+        {
+            try
+            {
+                using var connection = new MySqlConnection(connectionString);
+                await connection.OpenAsync();
+
+                string query = @"
+                    SELECT Id, Username, Email, IsActive 
+                    FROM Users 
+                    WHERE Id = @userId AND Username = @username AND IsActive = 1";
+
+                using var command = new MySqlCommand(query, connection);
+                command.Parameters.AddWithValue("@userId", userId);
+                command.Parameters.AddWithValue("@username", username);
+
+                using var reader = await command.ExecuteReaderAsync();
+
+                if (await reader.ReadAsync())
+                {
+                    var user = new UserInfo
+                    {
+                        Id = reader.GetInt32("Id"),
+                        Username = reader.GetString("Username"),
+                        Email = reader.GetString("Email")
+                    };
+
+                    _ = UpdateLastLoginAsync(user.Id);
+
+                    return (true, "User validated successfully", user);
+                }
+                else
+                {
+                    return (false, "User not found or inactive", null);
+                }
+            }
+            catch (Exception ex)
+            {
+                return (false, $"Validation failed: {ex.Message}", null);
             }
         }
 

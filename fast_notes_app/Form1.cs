@@ -10,10 +10,23 @@ namespace fast_notes_app
 
         public Form1()
         {
+
             InitializeComponent();
             dbHelper = new DatabaseHelper();
 
-            InitializeDatabaseAsync();
+            CheckSavedCredentialsAsync();
+            this.Shown += async (s, e) =>
+            {
+                this.Opacity = 0; // Oculta visualmente el formulario
+
+                await InitializeDatabaseAsync();
+                await Task.Delay(300); // Pequeño delay opcional para "suavizar"
+
+                CheckSavedCredentialsAsync();
+
+                this.Opacity = 1; // Mostrar si no hubo auto-login
+            };
+
             SetPlaceholderStyle(textBox1, true);
             SetPlaceholderStyle(textBox2, true);
 
@@ -65,7 +78,52 @@ namespace fast_notes_app
             this.KeyDown += (s, e) => {
                 if (e.KeyCode == Keys.Escape)
                     this.Close();
+                if (e.KeyCode == Keys.Enter)
+                    button1.PerformClick();
             };
+        }
+
+        private async void CheckSavedCredentialsAsync()
+        {
+            try
+            {
+                if (CredentialManager.HasSavedCredentials())
+                {
+                    var (success, username, userId) = CredentialManager.GetSavedCredentials();
+
+                    if (success && !string.IsNullOrEmpty(username) && userId > 0)
+                    {
+                        //button1.Text = "Auto-signing in...";
+                        //button1.Enabled = false;
+
+                        var (loginSuccess, message, user) = await dbHelper.ValidateUserByIdAsync(userId, username);
+
+                        if (loginSuccess && user != null)
+                        {
+                            // Auto-login successful
+                            var mainForm = new MainForm(user);
+                            mainForm.Show();
+                            this.Hide();
+                            return;
+                        }
+                        else
+                        {
+                            CredentialManager.DeleteSavedCredentials();
+                        }
+
+                        button1.Text = "Sign In";
+                        button1.Enabled = true;
+                    }
+                }
+                this.Opacity = 1;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Auto-login error: {ex.Message}");
+                button1.Text = "Sign In";
+                button1.Enabled = true;
+                this.Opacity = 1;
+            }
         }
 
         private async Task InitializeDatabaseAsync()
@@ -122,6 +180,13 @@ namespace fast_notes_app
 
                 if (success && user != null)
                 {
+                    // Save credentials for auto-login
+                    bool credentialsSaved = CredentialManager.SaveCredentials(user.Username, user.Id);
+                    if (!credentialsSaved)
+                    {
+                        Console.WriteLine("Warning: Could not save login credentials for auto-login");
+                    }
+
                     //login passes
                     this.Hide();
                     var mainForm = new MainForm(user);
