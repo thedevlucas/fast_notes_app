@@ -9,7 +9,7 @@
 
 <br>
 
-<img src="https://github.com/TheDevLucas/fast-notes-app/blob/main/preview.png?raw=true" alt="Fast Notes Preview" width="800"/>
+<img src="https://raw.githubusercontent.com/thedevlucas/fast_notes_app/refs/heads/master/image.png" alt="Fast Notes Preview" width="800"/>
 
 ## ✨ Fast Notes App
 A modern and lightweight desktop note-taking app with secure user login and persistent storage via MySQL.
