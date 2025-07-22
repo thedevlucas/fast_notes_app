@@ -102,10 +102,9 @@ namespace fast_notes_app
 
                         if (loginSuccess && user != null)
                         {
-                            // Auto-login successful - hide this form and show main form
                             this.Hide();
                             var mainForm = new MainForm(user);
-                            mainForm.FormClosed += (s, e) => this.Close(); // Close login form when main form closes
+                            mainForm.FormClosed += (s, e) => this.Close();
                             mainForm.Show();
                             return;
                         }
@@ -181,17 +180,15 @@ namespace fast_notes_app
 
                 if (success && user != null)
                 {
-                    // Save credentials for auto-login
                     bool credentialsSaved = CredentialManager.SaveCredentials(user.Username, user.Id);
                     if (!credentialsSaved)
                     {
                         Console.WriteLine("Warning: Could not save login credentials for auto-login");
                     }
 
-                    // Hide login form and show main form
                     this.Hide();
                     var mainForm = new MainForm(user);
-                    mainForm.FormClosed += (s, e) => this.Close(); // Close login form when main form closes
+                    mainForm.FormClosed += (s, e) => this.Close();
                     mainForm.Show();
                 }
                 else
